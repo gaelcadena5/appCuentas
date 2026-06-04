@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+body {
+  background-color: #020617; /* slate-950 */
+  color: #f8fafc; /* slate-50 */
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+.glass-card {
+  background-color: rgba(15, 23, 42, 0.6); /* slate-900/60 */
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(51, 65, 85, 0.4); /* slate-700/40 */
+  border-radius: 1.25rem;
+}
+
+/* Custom styling for standard HTML select elements to match our slate theme */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2050/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+  background-position: right 1rem center;
+  background-size: 1.25rem;
+  background-repeat: no-repeat;
+  padding-right: 2.5rem !important;
+}
+
+/* Custom Scrollbar for modern feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
