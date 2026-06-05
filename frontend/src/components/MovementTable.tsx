@@ -232,14 +232,15 @@ export function MovementTable({ movimientos, onDelete, onEdit }: MovementTablePr
               {/* Método de Pago */}
               <div>
                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Método de Pago</label>
-                <input
-                  type="text"
+                <select
                   name="metodo_pago"
-                  value={editForm.metodo_pago || ''}
+                  value={editForm.metodo_pago || 'Efectivo'}
                   onChange={handleInputChange}
-                  required
                   className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-slate-200 focus:outline-none focus:border-indigo-500 transition-colors"
-                />
+                >
+                  <option value="Efectivo">💵 Efectivo</option>
+                  <option value="Tarjeta">💳 Tarjeta</option>
+                </select>
               </div>
 
               {/* Fecha */}

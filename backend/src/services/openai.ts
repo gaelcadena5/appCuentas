@@ -78,12 +78,9 @@ export const openaiService = {
       - concepto: Descripción breve del gasto/ingreso (ej. "gasolina", "desayuno Allison", "OpenAI").
       - tipo: Clasifica estrictamente como "gasto" (salidas de dinero, compras) o "ingreso" (entradas de dinero, salario, transferencias recibidas).
       - metodo_pago: 
-        - Si es efectivo, usa "Efectivo".
-        - Si es transferencia, usa "Transferencia".
-        - Si es tarjeta, deduce el banco o marca si se menciona (ej. "BBVA", "Santander", "Rappi", "Banamex", etc.) y quién es el dueño de la tarjeta (los únicos dueños posibles son "Gael" y "Allison").
-        - Formatea el método de pago de tarjeta estrictamente como: "Tarjeta [Banco] [Dueño]" (ej. "Tarjeta BBVA Gael", "Tarjeta Santander Allison", "Tarjeta Rappi Gael", "Tarjeta Santander Gael").
-        - Si se menciona la tarjeta/banco pero no el dueño, usa "Tarjeta [Banco]" (ej. "Tarjeta BBVA"). Si se menciona el dueño pero no el banco, usa "Tarjeta [Dueño]" (ej. "Tarjeta Gael", "Tarjeta Allison"). Si no se especifica banco ni dueño, usa "Tarjeta".
-        - Si no se menciona o no se puede deducir nada, pon null.
+        - Si es tarjeta (crédito, débito, etc.), transferencia o pago bancario (ej. BBVA, Santander, Rappi, etc.), usa estrictamente "Tarjeta".
+        - Si es efectivo o no se especifica el método de pago en el texto, usa "Efectivo".
+        - Los únicos valores permitidos son "Efectivo" y "Tarjeta". No incluyas nombres de bancos, marcas ni dueños de tarjeta.
       - fecha: Devuelve la fecha en formato YYYY-MM-DD según las reglas anteriores.
     `;
 
@@ -109,7 +106,7 @@ export const openaiService = {
                     monto: { type: ['number', 'null'] },
                     concepto: { type: ['string', 'null'] },
                     tipo: { type: ['string', 'null'], enum: ['gasto', 'ingreso', null] },
-                    metodo_pago: { type: ['string', 'null'] },
+                    metodo_pago: { type: 'string', enum: ['Efectivo', 'Tarjeta'] },
                     categoria: { type: ['string', 'null'] },
                     fecha: { type: ['string', 'null'] }
                   },
@@ -155,8 +152,10 @@ export const openaiService = {
       - categoria: Si la transacción corregida/modificada es un "gasto", clasifica estrictamente como "Gasto Necesario" (gastos esenciales, vitales e inevitables como gasolina, supermercado, despensa, ejercicio, crossfit, renta, servicios públicos, internet, seguros, etc.) o "Gasto Innecesario" (gastos discrecionales, de ocio o entretenimiento como cine, cenas fuera, salidas, café, compras no esenciales, etc.). Si es un "ingreso", la categoría debe ser "Ingreso". No uses ninguna otra categoría.
       
       Reglas de método de pago:
-      - metodo_pago: Si es efectivo, usa "Efectivo". Si es transferencia, usa "Transferencia". Si es tarjeta, deduce el banco o marca si se menciona (ej. "BBVA", "Santander", "Rappi", "Banamex", etc.) y quién es el dueño de la tarjeta (los únicos dueños posibles son "Gael" y "Allison").
-        Formatea el método de pago de tarjeta estrictamente como: "Tarjeta [Banco] [Dueño]" (ej. "Tarjeta BBVA Gael", "Tarjeta Santander Allison", "Tarjeta Rappi Gael", "Tarjeta Santander Gael"). Si se menciona la tarjeta/banco pero no el dueño, usa "Tarjeta [Banco]". Si se menciona el dueño pero no el banco, usa "Tarjeta [Dueño]" (ej. "Tarjeta Gael", "Tarjeta Allison"). Si no se especifica banco ni dueño, usa "Tarjeta".
+      - metodo_pago: 
+        - Si es tarjeta (crédito, débito, etc.), transferencia o pago bancario, usa estrictamente "Tarjeta".
+        - Si es efectivo o no se especifica el método de pago, usa "Efectivo".
+        - Los únicos valores permitidos son "Efectivo" y "Tarjeta". No incluyas nombres de bancos, marcas ni dueños de tarjeta.
       
       Mantén los campos y transacciones que no se mencionen o no se alteren tal como están.
       Debes devolver la lista completa de transacciones corregidas.
@@ -183,7 +182,7 @@ export const openaiService = {
                     monto: { type: ['number', 'null'] },
                     concepto: { type: ['string', 'null'] },
                     tipo: { type: ['string', 'null'], enum: ['gasto', 'ingreso', null] },
-                    metodo_pago: { type: ['string', 'null'] },
+                    metodo_pago: { type: 'string', enum: ['Efectivo', 'Tarjeta'] },
                     categoria: { type: ['string', 'null'] },
                     fecha: { type: ['string', 'null'] }
                   },

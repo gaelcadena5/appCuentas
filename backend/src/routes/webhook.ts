@@ -163,8 +163,15 @@ async function procesarTransacciones(chatId: number, lista: TransaccionExtraida[
   for (let i = 0; i < lista.length; i++) {
     const t = lista[i];
 
-    // Autocompletar método de pago por defecto a 'Efectivo'
-    if (!t.metodo_pago) {
+    // Normalizar método de pago: sólo Tarjeta o Efectivo (por defecto Efectivo)
+    if (t.metodo_pago) {
+      const lower = t.metodo_pago.toLowerCase();
+      if (lower.includes('tarjeta') || lower.includes('transferencia') || lower.includes('card')) {
+        t.metodo_pago = 'Tarjeta';
+      } else {
+        t.metodo_pago = 'Efectivo';
+      }
+    } else {
       t.metodo_pago = 'Efectivo';
     }
 
