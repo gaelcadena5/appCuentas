@@ -122,6 +122,7 @@ export function MovementTable({ movimientos, onDelete, onEdit }: MovementTablePr
                           day: '2-digit',
                           month: 'short',
                           year: 'numeric',
+                          timeZone: 'UTC',
                         })}
                       </span>
                     </td>
